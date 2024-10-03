@@ -1,3 +1,4 @@
+[![Coverage Status](https://coveralls.io/repos/github/piorot/athletes-activity-processor/badge.svg?branch=main)](https://coveralls.io/github/piorot/athletes-activity-processor?branch=main)
 
 You are tasked with developing a library that processes data from professional athletes' sports computers. The objective is to create a library capable of loading three types of input data, each through a separate method, and then processing this data. The final output should be a unified JSON file that consolidates all three datasets, which will then be used by the science team for further analysis.
 
