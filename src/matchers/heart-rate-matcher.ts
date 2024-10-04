@@ -1,4 +1,4 @@
-import LapHeartRateSample from "../interfaces/lapHeartRateSample";
+import LapHeartRateSample from "../interfaces/lap-heart-rate-sample";
 
 export const customMatchers = {
   toMatchHeartRateSeries(received: Array<LapHeartRateSample>, ...expected: number[]) {

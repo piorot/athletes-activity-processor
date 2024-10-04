@@ -1,4 +1,4 @@
-import { SampleType } from "../enums/SampleType";
+import { SampleType } from "../enums/sample-type";
 
 export default interface Sample {
   "recording-rate": number;
