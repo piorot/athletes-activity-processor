@@ -1,4 +1,4 @@
-import { ActivityType } from "../enums/ActivityType";
+import { ActivityType } from "../enums/activity-type";
 
 export default interface Summary {
   userId: string;
