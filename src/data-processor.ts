@@ -1,6 +1,3 @@
-import { ActivityDataValidationService } from "./validators/activity-data-validation-service";
-import { SamplesValidationService } from "./validators/samples-validation-service";
-import { SummaryValidationService } from "./validators/summary-validation-service";
 import { SampleType } from "./enums/sample-type";
 import Summary from "./interfaces/summary";
 import Lap from "./interfaces/lap";
@@ -15,22 +12,13 @@ export class DataProcessor {
   private activitySummary!: Summary;
   private laps!: Lap[];
   private samples!: Sample[];
-  private lapsValidationService: ValidationService<Lap[]>;
-  private summaryValidationService: ValidationService<Summary>;
-  private samplesValidationService: ValidationService<Sample[]>;
-  private activityDataValidationService: ValidationService<ActivityData>;
 
   constructor(
-    lapsValidationService: ValidationService<Lap[]>,
-    summaryValidationService: ValidationService<Summary>,
-    samplesValidationService: ValidationService<Sample[]>,
-    activityDataValidationService: ValidationService<ActivityData>
-  ) {
-    this.lapsValidationService = lapsValidationService;
-    this.summaryValidationService = summaryValidationService;
-    this.samplesValidationService = samplesValidationService;
-    this.activityDataValidationService = activityDataValidationService;
-  }
+    private lapsValidationService: ValidationService<Lap[]>,
+    private summaryValidationService: ValidationService<Summary>,
+    private samplesValidationService: ValidationService<Sample[]>,
+    private activityDataValidationService: ValidationService<ActivityData>
+  ) {}
 
   loadActivitySummary(summary: Summary) {
     this.summaryValidationService.validate(summary);
@@ -62,24 +50,25 @@ export class DataProcessor {
   }
 
   private ensureDataIsLoaded(): void {
-    if (!this.activitySummary || !this.laps || !this.samples) {
-      throw new ValidationError(
-        "Data validation error: Activity summary, laps, and samples must be loaded before processing."
-      );
-    }
+    if (this.activitySummary && this.laps && this.samples) return;
+    throw new ValidationError(
+      "Data validation error: Activity summary, laps, and samples must be loaded before processing."
+    );
   }
 
-  private extractHeartRateSamplesForLap(lapIndex: number, activityType: ActivityType): LapHeartRateSample[] | any {
-    const relevantForActivityTypeOnly = (_sample: Sample, index: number) => {
+  private extractHeartRateSamplesForLap(lapIndex: number, activityType: ActivityType): LapHeartRateSample[] {
+    const filterRelevantSamplesForLap = (_sample: Sample, index: number) => {
+      const INDOOR_CYCLING_SAMPLE_MULTIPLIER = 2;
       return activityType === ActivityType.INDOOR_CYCLING
-        ? index === 2 * lapIndex || index === 2 * lapIndex + 1
+        ? index === INDOOR_CYCLING_SAMPLE_MULTIPLIER * lapIndex ||
+            index === INDOOR_CYCLING_SAMPLE_MULTIPLIER * lapIndex + 1
         : index === lapIndex;
     };
 
     const splitCSVAndParse = (sample: Sample) => sample.data.split(",").map((reading) => parseInt(reading) || 0);
 
     return this.samples
-      .filter(relevantForActivityTypeOnly)
+      .filter(filterRelevantSamplesForLap)
       .flatMap(splitCSVAndParse)
       .map((heartRate, index) => ({ sampleIndex: index, heartRate }));
   }
