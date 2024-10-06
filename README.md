@@ -1,5 +1,32 @@
 [![Coverage Status](https://coveralls.io/repos/github/piorot/athletes-activity-processor/badge.svg?branch=main)](https://coveralls.io/github/piorot/athletes-activity-processor?branch=main)
 
+## DataProcessor Library Overview
+
+This library processes real-world athlete activity data (summary, laps, samples) with a strong focus on **data consistency** and **error handling**. The design is flexible and gives users detailed feedback if data is inconsistent or invalid. 
+
+### Why Inject Multiple Validation Services?
+
+The library uses **four validation services** (one for each data type: summary, laps, samples, and cross-validation) to handle different aspects of the data. Here's why it's a good approach:
+
+- **Separation of Concerns**: Each part of the data is validated separately, keeping the logic clear and maintainable.
+- **User Customization**: You can adjust validation rules for different use cases. For example, you might want to customize the threshold for max heart rate or decide how to handle non-parsable heart rate readings (e.g., replacing `NaN` with 0 or discarding them).
+- **Cross-Validation**: Besides validating data individually, cross-validation ensures that relationships between the summary, laps, and samples make sense. This validation can be customized, so you're free to apply your own consistency rules.
+
+### Flexibility with Real Data
+
+This approach gives you the flexibility to work with real-world, often messy, data. You can plug in different validation strategies depending on your requirements—whether that’s stricter thresholds or specific error handling strategies.
+
+### Key Features
+
+- **CI/CD Pipeline**: A **GitHub Actions** CI pipeline ensures that all commits are automatically tested, making the project stable and reliable.
+- **High Code Coverage**: Integrated with **Coveralls**, code coverage is measured for every build and displayed via a badge.
+- **Strong Typing**: Everything is strongly typed with TypeScript, reducing errors and making it easier for developers to use the library confidently.
+- **Custom Jest Matcher**: I’ve added a custom Jest matcher for clearer, more readable tests.
+
+This design gives flexibility while ensuring robustness, making it a powerful tool for processing real-world athlete data.
+
+## Task description:
+
 You are tasked with developing a library that processes data from professional athletes' sports computers. The objective is to create a library capable of loading three types of input data, each through a separate method, and then processing this data. The final output should be a unified JSON file that consolidates all three datasets, which will then be used by the science team for further analysis.
 
 ### Data Set Characteristics:
