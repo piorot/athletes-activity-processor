@@ -6,7 +6,11 @@ This library processes real-world athlete activity data (summary, laps, samples)
 
 ### Why Inject Multiple Validation Services?
 
-The library uses **four validation services** (one for each data type: summary, laps, samples, and cross-validation) to handle different aspects of the data. Here's why it's a good approach:
+The library uses **four validation services** (one for each data type: summary, laps, samples, and cross-validation) to handle different aspects of the data. 
+
+![image](https://github.com/user-attachments/assets/4949ccaa-bc18-4482-af6f-adc3daa6fb3f)
+
+#### Here's why it's a good approach:
 
 - **Separation of Concerns**: Each part of the data is validated separately, keeping the logic clear and maintainable.
 - **User Customization**: You can adjust validation rules for different use cases. For example, you might want to customize the threshold for max heart rate or decide how to handle non-parsable heart rate readings (e.g., replacing `NaN` with 0 or discarding them).
@@ -21,9 +25,17 @@ This approach gives you the flexibility to work with real-world, often messy, da
 - **CI/CD Pipeline**: A **GitHub Actions** CI pipeline ensures that all commits are automatically tested, making the project stable and reliable.
 - **High Code Coverage**: Integrated with **Coveralls**, code coverage is measured for every build and displayed via a badge.
 - **Strong Typing**: Everything is strongly typed with TypeScript, reducing errors and making it easier for developers to use the library confidently.
-- **Custom Jest Matcher**: I’ve added a custom Jest matcher for clearer, more readable tests.
+- **Custom Jest Matcher**: I’ve added a custom Jest matcher for clearer, more readable tests. `expect(heartRateSamples).toMatchHeartRateSeries(116, 117, 118);`
+
+
 
 This design gives flexibility while ensuring robustness, making it a powerful tool for processing real-world athlete data.
+
+### Solution status
+- [x] Implement your solution using one of the following general-purpose programming languages: Java, Kotlin, C#, Python, JavaScript, or TypeScript. JavaScript or TypeScript is preferred.
+- [x] Ensure that your solution achieves at least 80% test coverage.
+- [x] We value both enterprise-level robustness and simplicity in your code, so please strive to balance these aspects.
+- [x] Submit your solution by pushing it to a Git repository and sharing the link with us.
 
 ## Task description:
 
